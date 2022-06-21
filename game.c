@@ -16,14 +16,20 @@ int main(){                 //main, onde seram chamadas as funções que fazem o
     
     inicio(&jogador);       
     
+    
     printf(" Seu dano de ataque: %d\n Seu dano de ultimate: %d\n Sua vida: %d\n", jogador.danoAtaque, jogador.danoUltimate, jogador.vida);
-
-    printf(" Voce entra na arena e começa sua primeira batalha\n");
+    printf(" \n");
+    printf(" Voce entra na arena e comeca sua primeira batalha\n");
+    printf(" \n");
     printf(" Em cada turno voce tem 3 opcoes\n");
     printf(" 1- Ataque normal\n");
     printf(" 2- Curar 70 pontos de vida\n");
     printf(" 3- Ultimate(1 vez por partida)\n");
+    printf("\n");
 
+    printf("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+    printf("voce comeca! digite 1, 2 ou 3 para escolher sua acao \n");
+    
     generateEnemy(&enemy);
 
     fight(&jogador, &enemy);
@@ -45,6 +51,8 @@ int inicio(pokemon *p){         //Função de inicio, onde será escolhido o pok
         
             switch (opcao){
         case 1:
+            
+            system("clear||cls");
             printf("Voce escolheu o Charizard!\n");         
             p->vida = 200;
             p->danoAtaque = 25;
@@ -53,6 +61,7 @@ int inicio(pokemon *p){         //Função de inicio, onde será escolhido o pok
             break;
 
         case 2:
+            system("clear||cls");
             printf("Voce escolheu o Jigglypuff!\n");
             p->vida = 150;
             p->danoAtaque = 40;
@@ -61,6 +70,7 @@ int inicio(pokemon *p){         //Função de inicio, onde será escolhido o pok
             break;
 
         case 3:
+            system("clear||cls");
             printf("Voce escolheu o Caterpie!\n");
             p->vida = 100;
             p->danoAtaque = 20;
@@ -80,7 +90,7 @@ int inicio(pokemon *p){         //Função de inicio, onde será escolhido o pok
 }
 
 
-int generateEnemy(pokemon *e){
+int generateEnemy(pokemon *e){        //Função que inicializa o inimigo
 
     e->vida = 250;
     e->danoAtaque = 40;
@@ -101,22 +111,30 @@ int fight(pokemon *player, pokemon *adversario){
 
         switch (escolha){
             case 1:
+                system("clear||cls");
                 adversario->vida -= player->danoAtaque;
-                printf("Sua vida e: %d\n", player->vida);
+                printf("vida do inimigo e: %d\n", adversario->vida);
+                printf("\n");
                 break;
 
 
             case 2:
+                system("clear||cls");
                 player->vida += 70;
                 printf("Sua vida e: %d\n", player->vida);
+                printf("vida do inimigo e: %d\n", adversario->vida);
+                printf("\n");
                 break;
 
             
             case 3:
+                system("clear||cls");
                 if(player->validaUltimate == 1){
                     adversario->vida -= player->danoUltimate;
                     player->validaUltimate = 0;
                     printf("Sua vida e %d\n", player->vida);
+                    printf("vida do inimigo e: %d\n", adversario->vida);
+                    printf("\n");
                 }else{
                     printf("voce ja usou a ultimate lerdao, perdeu o turno por bobeira\n");
                 }
@@ -126,19 +144,33 @@ int fight(pokemon *player, pokemon *adversario){
             default:
                 printf("ja falei as opcoes! 1, 2 ou 3\n");
                 printf("perdeu o turno por bobeira!\n");
+                printf("\n");
                 break;
         }
 
-        printf("o Pikadura usa ataque!\n");
+
+        if(adversario->vida <= 0){
+            printf("Você venceu o combate!!! \n");
+            printf("Volte novamente mais tarde para mais combates!!\n");
+            printf("\n");
+            break;
+        }else
+
         
+        printf("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+
+        printf("o Pika2 usa ataque!\n");        
         player->vida -= adversario->danoAtaque;
         printf("Sua vida e %d\n", player->vida);
+        printf("\n");
 
-
-
-    }
-
-    printf("ACABOU ESSA PORRA\n");
+        if (player->vida <= 0)
+        {
+            printf("Voce perdeu esse combate, treine mais e volte mais forte \n");
+            break;
+        }
+        
+    }               //while da função fight
 
     return 0;
 }
